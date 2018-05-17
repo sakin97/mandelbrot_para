@@ -219,6 +219,7 @@ int main(int argc, char *argv[])
     glutIdleFunc(idle);
 
 
+    //描画領域を4つに分ける
     int i, j;
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 2; j++) {
@@ -232,23 +233,13 @@ int main(int argc, char *argv[])
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 2; j++) {
         pthread_create(&threads[i][j], NULL, mandelbrotset, &points[i][j]);
-        //printf("thread%d started xstart = %d, 
-        //xend = %d, ystart = %d, yend = %d", i, points[i].xstart, points[i].xend, points[i].ystart, points[i].yend);
-    
         }
     }
 
-    /*
-    // 別スレッドで mandelbrotset() を実行 
-    if ( pthread_create( &mandelthread, NULL, 
-    mandelbrotset, NULL)){
-    perror("mandelthread");
-    };
-
-*/
     /* GLの描画ルーチンで計算中の配列を随時 描画する */
     glutMainLoop();
 
+    //スレッドの終了を待つ
     for (i = 0; i < 2; i++) { 
         for (j = 0; j < 2; j++) {
             pthread_join(threads[i][j], NULL);
