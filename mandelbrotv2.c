@@ -1,3 +1,23 @@
+/* 
+ * mandelbrotv2.c
+ * Copyright 2018 Naohiro Fukudome
+ * Based on mandelbrot.c by Yasuhiro Ohtaki.
+ *
+ * This program is free software; you can redistribute
+ * it and/or modify it under the terms of the
+ * GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This Program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 /*
  * mandelbrot.c
  * For Parrallel and Distributed Programming
@@ -22,6 +42,7 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 #include <pthread.h>
+#include <sys/time.h>
 
 #include <stdio.h>
 
@@ -79,8 +100,7 @@ struct Type_rgb setMyColor( int iteration )
  * （複素平面上の点(r0,i0)における収束回数）
  * この関数は変更する必要なし。
  */
-int mandel_sub(float r0,float i0)
-{
+int mandel_sub(float r0,float i0) {
     /*
      * r0 :- is the real part
      * i0 :- is the imaginary
@@ -236,7 +256,7 @@ int main(int argc, char *argv[])
     /* GLの描画ルーチンで計算中の配列を随時 描画する */
     glutMainLoop();
 
-    //スレッドの終了を待つ
+        //スレッドの終了を待つ
     for (i = 0; i < 2; i++) { 
         for (j = 0; j < 2; j++) {
             pthread_join(threads[i][j], NULL);

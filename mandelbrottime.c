@@ -119,42 +119,25 @@ void *mandelbrotset(void *x)
 	int iteration;
 	long loc;
 
-    time_t t1, t2;
-    int transrate, calc, store;
-
-    transrate = 0;
-    calc = 0;
-    store = 0;
-
 	//画面上の座標に対して
 	for(yy =0; yy < IMAGE_Y; yy++){
 		for(xx =0; xx < IMAGE_X; xx++){
 
-            t1 = time(NULL);
 			//複素平面上の座標に変換
 			i0= 2.1 * yy / IMAGE_Y -1.0;
 			r0= 3.6 * xx / IMAGE_X -2.5;
-            t2 = time(NULL);
 
-            transrate += (int)(t2 - t1);
 
-            t1 = time(NULL);
 			//収束にかかる回数を計算
 			iteration=mandel_sub(r0,i0);
-            t2 = time(NULL);
 
-            calc += (int)(t2 - t1);
 
-            t1 = time(NULL);
 			//画像を保持する配列に色情報を格納。
 			loc = yy*IMAGE_X + xx;
 			pixels[loc]= setMyColor(iteration);
-            t2 = time(NULL);
 
-            store += (int)(t2 - t1);
 		}
 	}
-    printf("transrate:%d\n calc:%d\n store:%d\n", transrate, calc, store);
 	pthread_exit(NULL);
 }
 
