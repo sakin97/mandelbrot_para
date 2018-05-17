@@ -219,7 +219,8 @@ int main(int argc, char *argv[])
     glutIdleFunc(idle);
 
 
-    //描画領域を4つに分ける
+    //描画領域を4つに分け，
+    //それぞれの領域でmandelbrotsetを実行するスレッドを生成する
     int i, j;
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 2; j++) {
@@ -227,12 +228,8 @@ int main(int argc, char *argv[])
             points[i][j].xend = points[i][j].xstart + IMAGE_X/2;
             points[i][j].ystart = i*IMAGE_Y/2;
             points[i][j].yend = points[i][j].ystart + IMAGE_Y/2;
-        }
-    }
 
-    for (i = 0; i < 2; i++) {
-        for (j = 0; j < 2; j++) {
-        pthread_create(&threads[i][j], NULL, mandelbrotset, &points[i][j]);
+            pthread_create(&threads[i][j], NULL, mandelbrotset, &points[i][j]);
         }
     }
 
